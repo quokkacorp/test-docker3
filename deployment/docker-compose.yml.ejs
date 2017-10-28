@@ -1,0 +1,7 @@
+version: "2"
+services:
+  <%= appname %>:
+    image: "richardzone/quokka-<%= appname %>-image"
+    ports:
+      - 3000
+    command: "npm start"

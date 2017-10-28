@@ -1,0 +1,39 @@
+#!groovy
+
+node('node') {
+    currentBuild.result = "SUCCESS"
+    env.CI = "true"
+    try {
+       stage('Checkout'){
+          checkout scm
+       }
+
+       stage('BuildAndTest'){
+          docker build -t richardzone/quokka-<%= appname %>-image .
+          docker run --rm richardzone/quokka-<%= appname %>-image npm test
+       }
+
+       stage('PushAppImage'){
+          docker push richardzone/quokka-<%= appname %>-image
+       }
+
+       stage('DeployToDev'){
+          docker run --rm -d -p 3001:3000 richardzone/quokka-<%= appname %>-image
+       }
+
+       stage('DeployToTest'){
+          docker run --rm -d -p 3002:3000 richardzone/quokka-<%= appname %>-image
+       }
+
+       stage('DeployToProd'){
+          docker run --rm -d -p 3003:3000 richardzone/quokka-<%= appname %>-image
+       }
+
+
+    }
+    catch (err) {
+        currentBuild.result = "FAILURE"
+        throw err
+    }
+
+}
