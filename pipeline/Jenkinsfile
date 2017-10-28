@@ -13,10 +13,6 @@ node {
           sh 'docker run --rm richardzone/quokka-test-docker3-image npm test'
        }
 
-       stage('PushAppImage'){
-          sh 'docker push richardzone/quokka-test-docker3-image'
-       }
-
        stage('DeployToDev'){
           sh 'docker run --rm -d -p 3001:3000 richardzone/quokka-test-docker3-image'
        }
