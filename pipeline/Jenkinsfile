@@ -14,15 +14,15 @@ node {
        }
 
        stage('DeployToDev'){
-          sh 'docker run --rm -d -p 3001:3000 richardzone/quokka-test-docker3-image'
+          sh 'docker run -d -p 3001:3000 richardzone/quokka-test-docker3-image'
        }
 
        stage('DeployToTest'){
-          sh 'docker run --rm -d -p 3002:3000 richardzone/quokka-test-docker3-image'
+          sh 'docker run -d -p 3002:3000 richardzone/quokka-test-docker3-image'
        }
 
        stage('DeployToProd'){
-          sh 'docker run --rm -d -p 3003:3000 richardzone/quokka-test-docker3-image'
+          sh 'docker run -d -p 3003:3000 richardzone/quokka-test-docker3-image'
        }
 
 
